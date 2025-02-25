@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
-export const Header: GlobalConfig = {
+export const Footer: GlobalConfig = {
   slug: 'footer',
   fields: [
     {
