@@ -1,4 +1,7 @@
 import type { CollectionConfig } from 'payload'
+import { Cover } from '@/blocks/cover/schema'
+import { RichText } from '@/blocks/richText/schema'
+import { Image } from '@/blocks/image/schema'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -22,18 +25,7 @@ export const Pages: CollectionConfig = {
       name: 'layout',
       label: 'Layout',
       type: 'blocks',
-      blocks: [
-        {
-          slug: 'content',
-          fields: [
-            {
-              name: 'content',
-              type: 'richText',
-              label: 'Content',
-            },
-          ],
-        },
-      ],
+      blocks: [Cover, RichText, Image],
     },
   ],
 }
