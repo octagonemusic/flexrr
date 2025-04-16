@@ -43,7 +43,7 @@ interface PageProps {
 
 export default async function Page({ params }: PageProps) {
   // Get the slug from params (no need to await it)
-  const { slug } = params
+  const { slug } = await params
   const pageSlug = slug || 'index'
 
   const page: PageType | null = await queryPageBySlug({
