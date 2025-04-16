@@ -37,7 +37,9 @@ export async function generateStaticParams() {
   return pages.docs?.map(({ slug }) => ({ slug })) || []
 }
 
-export default async function Page({ params: { slug } }: { params: { slug: string } }) {
+export default async function Page({ params }: { params: { slug: string } }) {
+  const { slug } = await params
+
   // If no slug provided, default to 'index'
   const pageSlug = slug || 'index'
 
