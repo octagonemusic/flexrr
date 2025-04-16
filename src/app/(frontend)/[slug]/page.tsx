@@ -1,17 +1,14 @@
 import config from '@payload-config'
 import { getPayload } from 'payload'
 import React, { cache } from 'react'
-
 import type { Page as PageType } from '../../../payload-types'
-
 import { RenderBlocks } from '@/utils/RenderBlocks'
 import { notFound } from 'next/navigation'
 
+// Cache for the page query
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
   const parsedSlug = decodeURIComponent(slug)
-
   const payload = await getPayload({ config })
-
   const result = await payload.find({
     collection: 'pages',
     limit: 1,
@@ -21,10 +18,10 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
       },
     },
   })
-
   return result.docs?.[0] || null
 })
 
+// Generate static pages at build time
 export async function generateStaticParams() {
   const payload = await getPayload({ config })
   const pages = await payload.find({
@@ -33,14 +30,20 @@ export async function generateStaticParams() {
     limit: 1000,
   })
 
-  // Return all slugs including 'index'
   return pages.docs?.map(({ slug }) => ({ slug })) || []
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const { slug } = await params
+// Set revalidation time for ISR (e.g., 60 seconds)
+export const revalidate = 60
 
-  // If no slug provided, default to 'index'
+// Define a proper interface for the page props
+interface PageProps {
+  params: { slug: string }
+}
+
+export default async function Page({ params }: PageProps) {
+  // Get the slug from params (no need to await it)
+  const { slug } = params
   const pageSlug = slug || 'index'
 
   const page: PageType | null = await queryPageBySlug({
@@ -57,3 +60,5 @@ export default async function Page({ params }: { params: { slug: string } }) {
     </article>
   )
 }
+
+export { Page as SlugPage }

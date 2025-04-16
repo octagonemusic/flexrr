@@ -4,6 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Media } from '@/payload-types'
 
+export const revalidate = 60
+
 export default async function HeaderServer() {
   const payload = await getPayload({ config })
 
