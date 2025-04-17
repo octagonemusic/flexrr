@@ -161,9 +161,6 @@ const serializeNodes = (nodes: LexicalNode[]): ReactNode => {
     }
 
     if (node.type === 'heading') {
-      // Add debug to see the actual tag value
-      console.log('Heading node:', node)
-
       const tagLevel =
         typeof node.tag === 'number'
           ? node.tag
