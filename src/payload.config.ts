@@ -13,6 +13,7 @@ import { Pages } from './collections/Pages'
 import { Header } from './globals/Header'
 import { Footer } from './globals/Footer'
 import { SiteSettings } from './globals/SiteSettings'
+import { ColorSettings } from './globals/ColorSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -25,7 +26,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Pages],
-  globals: [Header, Footer, SiteSettings],
+  globals: [Header, Footer, SiteSettings, ColorSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

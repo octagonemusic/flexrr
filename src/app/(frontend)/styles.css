@@ -1,10 +1,22 @@
 @import 'tailwindcss';
 
-/* Base styles */
+/* CSS Variables for theming */
 :root {
+  --color-bg-primary: #000000;
+  --color-bg-secondary: #121212;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #aaaaaa;
+  --color-accent-primary: #3b82f6;
+  --color-accent-secondary: #8b5cf6;
+  --color-header-bg: linear-gradient(to right, #3b82f6, #8b5cf6);
+  --color-header-text: #ffffff;
+  --color-footer-bg: #1f2937;
+  --color-footer-text: #ffffff;
+  --color-footer-text-secondary: #9ca3af;
   --font-mono: 'Roboto Mono', monospace;
 }
 
+/* Base styles */
 * {
   box-sizing: border-box;
 }
@@ -12,7 +24,7 @@
 html {
   font-size: 18px;
   line-height: 32px;
-  background: rgb(0, 0, 0);
+  background: var(--color-bg-primary);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -27,7 +39,7 @@ body {
   font-size: 18px;
   line-height: 32px;
   margin: 0;
-  color: rgb(255, 255, 255);
+  color: var(--color-text-primary);
 
   @media (max-width: 1024px) {
     font-size: 15px;

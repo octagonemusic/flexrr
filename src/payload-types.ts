@@ -90,11 +90,13 @@ export interface Config {
     header: Header;
     footer: Footer;
     'site-settings': SiteSetting;
+    'color-settings': ColorSetting;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    'color-settings': ColorSettingsSelect<false> | ColorSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -466,6 +468,69 @@ export interface SiteSetting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "color-settings".
+ */
+export interface ColorSetting {
+  id: string;
+  background?: {
+    /**
+     * The main background color of the site (example: #000000)
+     */
+    primary?: string | null;
+    /**
+     * Used for cards, sections, and secondary elements (example: #121212)
+     */
+    secondary?: string | null;
+  };
+  text?: {
+    /**
+     * Main text color throughout the site (example: #FFFFFF)
+     */
+    primary?: string | null;
+    /**
+     * Used for less important text, subtitles, and captions (example: #AAAAAA)
+     */
+    secondary?: string | null;
+  };
+  accent?: {
+    /**
+     * Main accent color for buttons, links, and highlights (example: #3B82F6)
+     */
+    primary?: string | null;
+    /**
+     * Used for secondary buttons, hover states, and alternative highlights (example: #8B5CF6)
+     */
+    secondary?: string | null;
+  };
+  header?: {
+    /**
+     * Background color or gradient for the site header (example: linear-gradient(to right, #3B82F6, #8B5CF6) or #3B82F6)
+     */
+    background?: string | null;
+    /**
+     * Text color for the header navigation (example: #FFFFFF)
+     */
+    text?: string | null;
+  };
+  footer?: {
+    /**
+     * Background color for the site footer (example: #1F2937)
+     */
+    background?: string | null;
+    /**
+     * Main text color in the footer (example: #FFFFFF)
+     */
+    text?: string | null;
+    /**
+     * Used for less important text in the footer (example: #9CA3AF)
+     */
+    secondaryText?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -528,6 +593,46 @@ export interface SiteSettingsSelect<T extends boolean = true> {
               url?: T;
               id?: T;
             };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "color-settings_select".
+ */
+export interface ColorSettingsSelect<T extends boolean = true> {
+  background?:
+    | T
+    | {
+        primary?: T;
+        secondary?: T;
+      };
+  text?:
+    | T
+    | {
+        primary?: T;
+        secondary?: T;
+      };
+  accent?:
+    | T
+    | {
+        primary?: T;
+        secondary?: T;
+      };
+  header?:
+    | T
+    | {
+        background?: T;
+        text?: T;
+      };
+  footer?:
+    | T
+    | {
+        background?: T;
+        text?: T;
+        secondaryText?: T;
       };
   updatedAt?: T;
   createdAt?: T;

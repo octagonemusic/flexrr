@@ -3,7 +3,9 @@ import './styles.css'
 import HeaderServer from '@/blocks/globals/Header/Server'
 import FooterServer from '@/blocks/globals/Footer/Server'
 import { getSiteSettings } from '@/utils/getSiteSettings'
+import { getColorSettings } from '@/utils/getColorSettings'
 import { Media } from '@/payload-types'
+import ColorStylesServer from '@/components/ColorStylesServer'
 
 // Set revalidation for the layout containing header and footer
 export const revalidate = 60
@@ -34,9 +36,13 @@ export async function generateMetadata() {
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
+  const colorSettings = await getColorSettings()
 
   return (
     <html lang="en">
+      <head>
+        <ColorStylesServer colorSettings={colorSettings} />
+      </head>
       <body>
         <HeaderServer />
         <main>{children}</main>
