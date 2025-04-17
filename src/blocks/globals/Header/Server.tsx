@@ -18,7 +18,7 @@ export default async function HeaderServer() {
   const logo = typeof header?.logo === 'object' ? (header.logo as Media) : null
 
   return (
-    <header className="bg-gradient-to-r from-blue-600 to-purple-600 shadow-md">
+    <header style={{ background: 'var(--color-header-bg)' }} className="shadow-md">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo Section */}
@@ -40,7 +40,8 @@ export default async function HeaderServer() {
               <Link
                 key={index}
                 href={item.link || '#'}
-                className="text-white hover:text-blue-100 px-4 py-2 rounded-md text-lg font-medium transition-colors duration-200 hover:bg-blue-700"
+                style={{ color: 'var(--color-header-text)' }}
+                className="hover:text-blue-100 px-4 py-2 rounded-md text-lg font-medium transition-colors duration-200 hover:bg-blue-700"
               >
                 {item.label}
               </Link>
