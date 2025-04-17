@@ -89,10 +89,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    'site-settings': SiteSetting;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -166,6 +168,24 @@ export interface Page {
   id: string;
   name: string;
   slug: string;
+  /**
+   * Settings for search engine optimization
+   */
+  seo?: {
+    /**
+     * Custom title for search engines. Defaults to page name if empty.
+     */
+    title?: string | null;
+    /**
+     * Brief description for search engines.
+     */
+    description?: string | null;
+    /**
+     * Image displayed when shared on social media (defaults to global setting if empty).
+     */
+    image?: (string | null) | Media;
+    noIndex?: boolean | null;
+  };
   layout?:
     | (
         | {
@@ -308,6 +328,14 @@ export interface MediaSelect<T extends boolean = true> {
 export interface PagesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        noIndex?: T;
+      };
   layout?:
     | T
     | {
@@ -404,6 +432,40 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: string;
+  generalSettings: {
+    siteName: string;
+    siteDescription?: string | null;
+    favicon?: (string | null) | Media;
+    /**
+     * Used for social media when sharing your site
+     */
+    ogImage?: (string | null) | Media;
+  };
+  seoSettings?: {
+    /**
+     * Appended to all page titles, e.g. " | My Website"
+     */
+    metaTitleSuffix?: string | null;
+    indexingEnabled?: boolean | null;
+  };
+  socialMedia?: {
+    accounts?:
+      | {
+          platform?: ('facebook' | 'twitter' | 'instagram' | 'linkedin' | 'youtube' | 'tiktok' | 'github') | null;
+          url?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -433,6 +495,40 @@ export interface FooterSelect<T extends boolean = true> {
         id?: T;
       };
   copyrightNotice?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  generalSettings?:
+    | T
+    | {
+        siteName?: T;
+        siteDescription?: T;
+        favicon?: T;
+        ogImage?: T;
+      };
+  seoSettings?:
+    | T
+    | {
+        metaTitleSuffix?: T;
+        indexingEnabled?: T;
+      };
+  socialMedia?:
+    | T
+    | {
+        accounts?:
+          | T
+          | {
+              platform?: T;
+              url?: T;
+              id?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

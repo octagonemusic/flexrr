@@ -4,6 +4,8 @@ import React, { cache } from 'react'
 import type { Page as PageType } from '../../../payload-types'
 import { RenderBlocks } from '@/utils/RenderBlocks'
 import { notFound } from 'next/navigation'
+import { generateMetadata as generatePageMetadata } from '@/utils/generateMetadata'
+import { Metadata } from 'next'
 
 // Cache for the page query
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
@@ -20,6 +22,26 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
   })
   return result.docs?.[0] || null
 })
+
+// Generate metadata for the page
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string }
+}): Promise<Metadata> {
+  const pageSlug = params.slug || 'index'
+  const page = await queryPageBySlug({ slug: pageSlug })
+
+  if (!page) return {}
+
+  // Use the custom SEO settings if available, or fall back to page name
+  return generatePageMetadata({
+    title: page.seo?.title || page.name || undefined,
+    description: page.seo?.description || undefined,
+    image: page.seo?.image || undefined,
+    noIndex: page.seo?.noIndex === true,
+  })
+}
 
 // Generate static pages at build time
 export async function generateStaticParams() {
@@ -42,7 +64,7 @@ interface PageProps {
 }
 
 export default async function Page({ params }: PageProps) {
-  // Get the slug from params (no need to await it)
+  // Get the slug from params
   const { slug } = await params
   const pageSlug = slug || 'index'
 
