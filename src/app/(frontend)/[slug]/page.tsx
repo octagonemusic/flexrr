@@ -29,7 +29,8 @@ export async function generateMetadata({
 }: {
   params: { slug: string }
 }): Promise<Metadata> {
-  const pageSlug = params.slug || 'index'
+  const prms = await params
+  const pageSlug = prms.slug || 'index'
   const page = await queryPageBySlug({ slug: pageSlug })
 
   if (!page) return {}
