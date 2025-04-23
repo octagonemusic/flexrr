@@ -50,9 +50,14 @@ export default async function FooterServer() {
                   key={index}
                   href={item.link || '#'}
                   style={{ color: 'var(--color-footer-text-secondary)' }}
-                  className="hover:text-white transition-colors duration-200"
+                  className="transition-colors duration-200 hover:text-opacity-100 relative group inline-block"
                 >
-                  {item.label}
+                  <span className="relative z-10">{item.label}</span>
+                  {/* Subtle underline on hover using accent color */}
+                  <span
+                    className="absolute left-0 right-0 bottom-0 h-0.5 transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"
+                    style={{ background: 'var(--color-accent-primary)' }}
+                  />
                 </Link>
               ))}
             </nav>
@@ -67,7 +72,7 @@ export default async function FooterServer() {
               <a
                 href="mailto:contact@example.com"
                 style={{ color: 'var(--color-accent-primary)' }}
-                className="hover:text-blue-300"
+                className="inline-block transition-colors duration-200 hover:opacity-80 relative"
               >
                 contact@example.com
               </a>
@@ -80,7 +85,9 @@ export default async function FooterServer() {
           className="border-t border-gray-700 pt-6 mt-6 text-center text-sm"
           style={{ color: 'var(--color-footer-text-secondary)' }}
         >
-          <p>Designed with ❤️ for flexrr</p>
+          <p>
+            Designed with <span className="text-red-500">❤️</span> for flexrr
+          </p>
         </div>
       </div>
     </footer>
