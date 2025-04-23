@@ -409,8 +409,29 @@ export interface Header {
   nav: {
     label?: string | null;
     link?: string | null;
+    /**
+     * Optional badge (e.g. "New", "Hot")
+     */
+    badge?: string | null;
+    /**
+     * Add dropdown items (if any)
+     */
+    submenu?:
+      | {
+          label?: string | null;
+          link?: string | null;
+          id?: string | null;
+        }[]
+      | null;
     id?: string | null;
   }[];
+  /**
+   * Optional call-to-action button
+   */
+  actionButton?: {
+    label?: string | null;
+    link?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -540,7 +561,21 @@ export interface HeaderSelect<T extends boolean = true> {
     | {
         label?: T;
         link?: T;
+        badge?: T;
+        submenu?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              id?: T;
+            };
         id?: T;
+      };
+  actionButton?:
+    | T
+    | {
+        label?: T;
+        link?: T;
       };
   updatedAt?: T;
   createdAt?: T;
