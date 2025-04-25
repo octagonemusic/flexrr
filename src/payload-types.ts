@@ -87,16 +87,16 @@ export interface Config {
     defaultIDType: string;
   };
   globals: {
-    header: Header;
-    footer: Footer;
     'site-settings': SiteSetting;
     'color-settings': ColorSetting;
+    header: Header;
+    footer: Footer;
   };
   globalsSelect: {
-    header: HeaderSelect<false> | HeaderSelect<true>;
-    footer: FooterSelect<false> | FooterSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     'color-settings': ColorSettingsSelect<false> | ColorSettingsSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
   user: User & {
@@ -401,60 +401,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header".
- */
-export interface Header {
-  id: string;
-  logo: string | Media;
-  nav: {
-    label?: string | null;
-    link?: string | null;
-    /**
-     * Optional badge (e.g. "New", "Hot")
-     */
-    badge?: string | null;
-    /**
-     * Add dropdown items (if any)
-     */
-    submenu?:
-      | {
-          label?: string | null;
-          link?: string | null;
-          id?: string | null;
-        }[]
-      | null;
-    id?: string | null;
-  }[];
-  /**
-   * Optional call-to-action button
-   */
-  actionButton?: {
-    label?: string | null;
-    link?: string | null;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer".
- */
-export interface Footer {
-  id: string;
-  logo: string | Media;
-  nav?:
-    | {
-        label?: string | null;
-        link?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  copyrightNotice?: string | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
  */
 export interface SiteSetting {
@@ -552,52 +498,57 @@ export interface ColorSetting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header_select".
+ * via the `definition` "header".
  */
-export interface HeaderSelect<T extends boolean = true> {
-  logo?: T;
-  nav?:
-    | T
-    | {
-        label?: T;
-        link?: T;
-        badge?: T;
-        submenu?:
-          | T
-          | {
-              label?: T;
-              link?: T;
-              id?: T;
-            };
-        id?: T;
-      };
-  actionButton?:
-    | T
-    | {
-        label?: T;
-        link?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
+export interface Header {
+  id: string;
+  logo: string | Media;
+  nav: {
+    label?: string | null;
+    link?: string | null;
+    /**
+     * Optional badge (e.g. "New", "Hot")
+     */
+    badge?: string | null;
+    /**
+     * Add dropdown items (if any)
+     */
+    submenu?:
+      | {
+          label?: string | null;
+          link?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    id?: string | null;
+  }[];
+  /**
+   * Optional call-to-action button
+   */
+  actionButton?: {
+    label?: string | null;
+    link?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer_select".
+ * via the `definition` "footer".
  */
-export interface FooterSelect<T extends boolean = true> {
-  logo?: T;
+export interface Footer {
+  id: string;
+  logo: string | Media;
   nav?:
-    | T
     | {
-        label?: T;
-        link?: T;
-        id?: T;
-      };
-  copyrightNotice?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
+        label?: string | null;
+        link?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  copyrightNotice?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -669,6 +620,55 @@ export interface ColorSettingsSelect<T extends boolean = true> {
         text?: T;
         secondaryText?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
+  nav?:
+    | T
+    | {
+        label?: T;
+        link?: T;
+        badge?: T;
+        submenu?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  actionButton?:
+    | T
+    | {
+        label?: T;
+        link?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  logo?: T;
+  nav?:
+    | T
+    | {
+        label?: T;
+        link?: T;
+        id?: T;
+      };
+  copyrightNotice?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

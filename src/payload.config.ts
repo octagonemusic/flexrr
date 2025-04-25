@@ -26,7 +26,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Pages],
-  globals: [Header, Footer, SiteSettings, ColorSettings],
+  globals: [SiteSettings, ColorSettings, Header, Footer],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
