@@ -1,7 +1,8 @@
 import CoverBlockServer from '@/blocks/cover/Server'
+import HeroBlockServer from '@/blocks/hero/Server'
 import ImageBlockServer from '@/blocks/image/Server'
 import RichTextBlockServer from '@/blocks/richText/Server'
-import { Page } from '@/payload-types'
+import { Media, Page } from '@/payload-types'
 import React, { Fragment } from 'react'
 import { LexicalDocument } from '@/utils/serialize'
 
@@ -33,8 +34,34 @@ interface RichTextBlock {
   blockName?: string | null
 }
 
-// Union type for all possible block types
-type BlockType = CoverBlock | ImageBlock | RichTextBlock
+// Add to the existing BlockType union type
+interface HeroBlock {
+  blockType: 'hero'
+  background: {
+    type: 'image' | 'video'
+    image?: Media | string
+    video?: Media | string
+    overlay?: boolean
+  }
+  layout: {
+    contentAlignment: 'left' | 'center' | 'right'
+    verticalAlignment: 'start' | 'center' | 'end'
+    contentWidth: 'narrow' | 'medium' | 'wide'
+  }
+  content: {
+    heading?: string
+    subheading?: string
+    buttons?: Array<{
+      label?: string
+      link?: string
+      variant?: 'primary' | 'secondary'
+    }>
+  }
+  id?: string | null
+  blockName?: string | null
+}
+
+type BlockType = CoverBlock | ImageBlock | RichTextBlock | HeroBlock
 
 // Type guards with specific types
 function isCoverBlock(block: BlockType): block is CoverBlock {
@@ -47,6 +74,11 @@ function isImageBlock(block: BlockType): block is ImageBlock {
 
 function isRichTextBlock(block: BlockType): block is RichTextBlock {
   return block.blockType === 'richText'
+}
+
+// Add type guard
+function isHeroBlock(block: BlockType): block is HeroBlock {
+  return block.blockType === 'hero'
 }
 
 // Helper function to get image object
@@ -96,6 +128,19 @@ export const RenderBlocks: React.FC<{
             return (
               <div className="my-16 px-4 sm:px-6" key={index}>
                 <RichTextBlockServer content={typedBlock.content} />
+              </div>
+            )
+          }
+
+          // Add to the render logic inside the map function
+          if (isHeroBlock(typedBlock)) {
+            return (
+              <div key={index}>
+                <HeroBlockServer
+                  background={typedBlock.background}
+                  content={typedBlock.content}
+                  layout={typedBlock.layout} // Pass the layout from the block data instead of hardcoding
+                />
               </div>
             )
           }

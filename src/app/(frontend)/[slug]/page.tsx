@@ -78,7 +78,7 @@ export default async function Page({ params }: PageProps) {
   }
 
   return (
-    <article className="pt-16 pb-24">
+    <article>
       <RenderBlocks blocks={page.layout} />
     </article>
   )

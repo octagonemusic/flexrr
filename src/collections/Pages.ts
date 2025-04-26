@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { Cover } from '@/blocks/cover/schema'
 import { RichText } from '@/blocks/richText/schema'
 import { Image } from '@/blocks/image/schema'
+import { Hero } from '@/blocks/hero/schema'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -20,6 +21,12 @@ export const Pages: CollectionConfig = {
         position: 'sidebar',
       },
       required: true,
+    },
+    {
+      name: 'layout',
+      label: 'Layout',
+      type: 'blocks',
+      blocks: [Cover, RichText, Image, Hero],
     },
     {
       name: 'seo',
@@ -62,12 +69,6 @@ export const Pages: CollectionConfig = {
           defaultValue: false,
         },
       ],
-    },
-    {
-      name: 'layout',
-      label: 'Layout',
-      type: 'blocks',
-      blocks: [Cover, RichText, Image],
     },
   ],
 }

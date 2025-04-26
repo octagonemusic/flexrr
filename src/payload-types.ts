@@ -170,24 +170,6 @@ export interface Page {
   id: string;
   name: string;
   slug: string;
-  /**
-   * Settings for search engine optimization
-   */
-  seo?: {
-    /**
-     * Custom title for search engines. Defaults to page name if empty.
-     */
-    title?: string | null;
-    /**
-     * Brief description for search engines.
-     */
-    description?: string | null;
-    /**
-     * Image displayed when shared on social media (defaults to global setting if empty).
-     */
-    image?: (string | null) | Media;
-    noIndex?: boolean | null;
-  };
   layout?:
     | (
         | {
@@ -223,8 +205,54 @@ export interface Page {
             blockName?: string | null;
             blockType: 'image';
           }
+        | {
+            background?: {
+              type?: ('image' | 'video') | null;
+              image?: (string | null) | Media;
+              video?: (string | null) | Media;
+              overlay?: boolean | null;
+            };
+            layout?: {
+              contentAlignment?: ('left' | 'center' | 'right') | null;
+              verticalAlignment?: ('start' | 'center' | 'end') | null;
+              contentWidth?: ('narrow' | 'medium' | 'wide') | null;
+            };
+            content: {
+              heading: string;
+              subheading?: string | null;
+              buttons?:
+                | {
+                    label: string;
+                    link: string;
+                    variant?: ('primary' | 'secondary') | null;
+                    id?: string | null;
+                  }[]
+                | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
+          }
       )[]
     | null;
+  /**
+   * Settings for search engine optimization
+   */
+  seo?: {
+    /**
+     * Custom title for search engines. Defaults to page name if empty.
+     */
+    title?: string | null;
+    /**
+     * Brief description for search engines.
+     */
+    description?: string | null;
+    /**
+     * Image displayed when shared on social media (defaults to global setting if empty).
+     */
+    image?: (string | null) | Media;
+    noIndex?: boolean | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -330,14 +358,6 @@ export interface MediaSelect<T extends boolean = true> {
 export interface PagesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
-  seo?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-        noIndex?: T;
-      };
   layout?:
     | T
     | {
@@ -363,6 +383,49 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        hero?:
+          | T
+          | {
+              background?:
+                | T
+                | {
+                    type?: T;
+                    image?: T;
+                    video?: T;
+                    overlay?: T;
+                  };
+              layout?:
+                | T
+                | {
+                    contentAlignment?: T;
+                    verticalAlignment?: T;
+                    contentWidth?: T;
+                  };
+              content?:
+                | T
+                | {
+                    heading?: T;
+                    subheading?: T;
+                    buttons?:
+                      | T
+                      | {
+                          label?: T;
+                          link?: T;
+                          variant?: T;
+                          id?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+      };
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        noIndex?: T;
       };
   updatedAt?: T;
   createdAt?: T;
