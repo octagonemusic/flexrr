@@ -4,6 +4,7 @@ import { RichText } from '@/blocks/richText/schema'
 import { Image } from '@/blocks/image/schema'
 import { Hero } from '@/blocks/hero/schema'
 import { HeroCarousel } from '@/blocks/heroCarousel/schema'
+import { CardGrid } from '@/blocks/cardGrid/schema'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -27,7 +28,7 @@ export const Pages: CollectionConfig = {
       name: 'layout',
       label: 'Layout',
       type: 'blocks',
-      blocks: [Cover, RichText, Image, Hero, HeroCarousel],
+      blocks: [Cover, RichText, Image, Hero, HeroCarousel, CardGrid],
     },
     {
       name: 'seo',

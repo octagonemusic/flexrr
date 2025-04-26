@@ -269,6 +269,26 @@ export interface Page {
             blockName?: string | null;
             blockType: 'heroCarousel';
           }
+        | {
+            heading?: string | null;
+            description?: string | null;
+            layout?: ('default' | 'compact' | 'wide') | null;
+            cards?:
+              | {
+                  image: string | Media;
+                  title: string;
+                  description?: string | null;
+                  link?: {
+                    text?: string | null;
+                    url?: string | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cardGrid';
+          }
       )[]
     | null;
   /**
@@ -497,6 +517,29 @@ export interface PagesSelect<T extends boolean = true> {
                           contentAlignment?: T;
                           contentWidth?: T;
                         };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        cardGrid?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              layout?: T;
+              cards?:
+                | T
+                | {
+                    image?: T;
+                    title?: T;
+                    description?: T;
+                    link?:
+                      | T
+                      | {
+                          text?: T;
+                          url?: T;
+                        };
+                    id?: T;
                   };
               id?: T;
               blockName?: T;
