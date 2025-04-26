@@ -233,6 +233,42 @@ export interface Page {
             blockName?: string | null;
             blockType: 'hero';
           }
+        | {
+            slides: {
+              background?: {
+                type?: ('image' | 'video') | null;
+                image?: (string | null) | Media;
+                video?: (string | null) | Media;
+                overlay?: boolean | null;
+              };
+              content: {
+                heading: string;
+                subheading?: string | null;
+                buttons?:
+                  | {
+                      label: string;
+                      link: string;
+                      variant?: ('primary' | 'secondary') | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+              };
+              id?: string | null;
+            }[];
+            settings?: {
+              autoplay?: boolean | null;
+              interval?: number | null;
+              showArrows?: boolean | null;
+              showDots?: boolean | null;
+              layout?: {
+                contentAlignment?: ('left' | 'center' | 'right') | null;
+                contentWidth?: ('narrow' | 'medium' | 'wide') | null;
+              };
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'heroCarousel';
+          }
       )[]
     | null;
   /**
@@ -413,6 +449,53 @@ export interface PagesSelect<T extends boolean = true> {
                           link?: T;
                           variant?: T;
                           id?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        heroCarousel?:
+          | T
+          | {
+              slides?:
+                | T
+                | {
+                    background?:
+                      | T
+                      | {
+                          type?: T;
+                          image?: T;
+                          video?: T;
+                          overlay?: T;
+                        };
+                    content?:
+                      | T
+                      | {
+                          heading?: T;
+                          subheading?: T;
+                          buttons?:
+                            | T
+                            | {
+                                label?: T;
+                                link?: T;
+                                variant?: T;
+                                id?: T;
+                              };
+                        };
+                    id?: T;
+                  };
+              settings?:
+                | T
+                | {
+                    autoplay?: T;
+                    interval?: T;
+                    showArrows?: T;
+                    showDots?: T;
+                    layout?:
+                      | T
+                      | {
+                          contentAlignment?: T;
+                          contentWidth?: T;
                         };
                   };
               id?: T;

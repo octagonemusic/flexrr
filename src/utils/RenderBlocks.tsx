@@ -1,5 +1,6 @@
 import CoverBlockServer from '@/blocks/cover/Server'
 import HeroBlockServer from '@/blocks/hero/Server'
+import HeroCarouselServer from '@/blocks/heroCarousel/Server'
 import ImageBlockServer from '@/blocks/image/Server'
 import RichTextBlockServer from '@/blocks/richText/Server'
 import { Media, Page } from '@/payload-types'
@@ -61,7 +62,41 @@ interface HeroBlock {
   blockName?: string | null
 }
 
-type BlockType = CoverBlock | ImageBlock | RichTextBlock | HeroBlock
+// Add this interface after your other block interfaces
+interface HeroCarouselBlock {
+  blockType: 'heroCarousel'
+  slides: {
+    background: {
+      type: 'image' | 'video'
+      image?: Media | string
+      video?: Media | string
+      overlay?: boolean
+    }
+    content: {
+      heading?: string
+      subheading?: string
+      buttons?: Array<{
+        label?: string
+        link?: string
+        variant?: 'primary' | 'secondary'
+      }>
+    }
+  }[]
+  settings: {
+    autoplay: boolean
+    interval: number
+    showArrows: boolean
+    showDots: boolean
+    layout: {
+      contentAlignment: 'left' | 'center' | 'right'
+      contentWidth: 'narrow' | 'medium' | 'wide'
+    }
+  }
+  id?: string | null
+  blockName?: string | null
+}
+
+type BlockType = CoverBlock | ImageBlock | RichTextBlock | HeroBlock | HeroCarouselBlock
 
 // Type guards with specific types
 function isCoverBlock(block: BlockType): block is CoverBlock {
@@ -79,6 +114,11 @@ function isRichTextBlock(block: BlockType): block is RichTextBlock {
 // Add type guard
 function isHeroBlock(block: BlockType): block is HeroBlock {
   return block.blockType === 'hero'
+}
+
+// Add this type guard with the other type guards
+function isHeroCarouselBlock(block: BlockType): block is HeroCarouselBlock {
+  return block.blockType === 'heroCarousel'
 }
 
 // Helper function to get image object
@@ -104,8 +144,16 @@ export const RenderBlocks: React.FC<{
     return (
       <Fragment>
         {blocks.map((block, index) => {
-          // Cast the block to our union type since we know it matches one of our types
           const typedBlock = block as BlockType
+
+          // Add this case with the other block type checks
+          if (isHeroCarouselBlock(typedBlock)) {
+            return (
+              <div key={index}>
+                <HeroCarouselServer slides={typedBlock.slides} settings={typedBlock.settings} />
+              </div>
+            )
+          }
 
           // Use type guards to render the correct component
           if (isCoverBlock(typedBlock)) {
