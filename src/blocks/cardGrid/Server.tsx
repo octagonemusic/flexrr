@@ -36,9 +36,9 @@ export default function CardGridServer({
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         {(heading || description) && (
-          <div className="text-center mb-12">
+          <div className="text-center mb-5">
             {heading && (
-              <h2 className="text-5xl font-bold mb-6 mx-auto">
+              <h2 className="text-5xl font-bold mb-2 mx-auto">
                 <span style={{ color: 'var(--color-text-primary)' }}>
                   {heading
                     .split(' ')
