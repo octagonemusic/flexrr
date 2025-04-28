@@ -25,7 +25,14 @@ interface ImageBlock {
         url: string
         alt: string
       }
-    | string // Can be a string ID or an object
+    | string
+  caption?: string
+  settings?: {
+    width?: 'full' | 'large' | 'medium' | 'small'
+    alignment?: 'left' | 'center' | 'right'
+    rounded?: boolean
+    shadow?: boolean
+  }
   id?: string | null
   blockName?: string | null
 }
@@ -265,7 +272,11 @@ export const RenderBlocks: React.FC<{
           if (isImageBlock(typedBlock)) {
             return (
               <div className="my-16" key={index}>
-                <ImageBlockServer image={getImageObject(typedBlock.image)} />
+                <ImageBlockServer
+                  image={getImageObject(typedBlock.image)}
+                  caption={typedBlock.caption}
+                  settings={typedBlock.settings}
+                />
               </div>
             )
           }

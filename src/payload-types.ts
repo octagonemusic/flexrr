@@ -201,6 +201,13 @@ export interface Page {
           }
         | {
             image: string | Media;
+            caption?: string | null;
+            settings?: {
+              width?: ('full' | 'large' | 'medium' | 'small') | null;
+              alignment?: ('left' | 'center' | 'right') | null;
+              rounded?: boolean | null;
+              shadow?: boolean | null;
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'image';
@@ -509,6 +516,15 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               image?: T;
+              caption?: T;
+              settings?:
+                | T
+                | {
+                    width?: T;
+                    alignment?: T;
+                    rounded?: T;
+                    shadow?: T;
+                  };
               id?: T;
               blockName?: T;
             };
