@@ -289,6 +289,79 @@ export interface Page {
             blockName?: string | null;
             blockType: 'cardGrid';
           }
+        | {
+            layout?: {
+              contentRatio?: ('50-50' | '60-40' | '40-60' | '70-30' | '30-70') | null;
+              verticalAlignment?: ('start' | 'center' | 'end') | null;
+              spacing?: ('compact' | 'medium' | 'spacious') | null;
+              reverseOnMobile?: boolean | null;
+            };
+            leftColumn: {
+              contentType: 'text' | 'media';
+              text?: {
+                heading?: string | null;
+                content?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: string;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
+                button?: {
+                  label?: string | null;
+                  link?: string | null;
+                  variant?: ('primary' | 'secondary') | null;
+                };
+              };
+              media?: {
+                type?: ('image' | 'video') | null;
+                image?: (string | null) | Media;
+                video?: (string | null) | Media;
+              };
+            };
+            rightColumn: {
+              contentType: 'text' | 'media';
+              text?: {
+                heading?: string | null;
+                content?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: string;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
+                button?: {
+                  label?: string | null;
+                  link?: string | null;
+                  variant?: ('primary' | 'secondary') | null;
+                };
+              };
+              media?: {
+                type?: ('image' | 'video') | null;
+                image?: (string | null) | Media;
+                video?: (string | null) | Media;
+              };
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'twoColumn';
+          }
       )[]
     | null;
   /**
@@ -540,6 +613,70 @@ export interface PagesSelect<T extends boolean = true> {
                           url?: T;
                         };
                     id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        twoColumn?:
+          | T
+          | {
+              layout?:
+                | T
+                | {
+                    contentRatio?: T;
+                    verticalAlignment?: T;
+                    spacing?: T;
+                    reverseOnMobile?: T;
+                  };
+              leftColumn?:
+                | T
+                | {
+                    contentType?: T;
+                    text?:
+                      | T
+                      | {
+                          heading?: T;
+                          content?: T;
+                          button?:
+                            | T
+                            | {
+                                label?: T;
+                                link?: T;
+                                variant?: T;
+                              };
+                        };
+                    media?:
+                      | T
+                      | {
+                          type?: T;
+                          image?: T;
+                          video?: T;
+                        };
+                  };
+              rightColumn?:
+                | T
+                | {
+                    contentType?: T;
+                    text?:
+                      | T
+                      | {
+                          heading?: T;
+                          content?: T;
+                          button?:
+                            | T
+                            | {
+                                label?: T;
+                                link?: T;
+                                variant?: T;
+                              };
+                        };
+                    media?:
+                      | T
+                      | {
+                          type?: T;
+                          image?: T;
+                          video?: T;
+                        };
                   };
               id?: T;
               blockName?: T;

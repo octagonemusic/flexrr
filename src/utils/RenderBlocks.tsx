@@ -4,6 +4,7 @@ import HeroCarouselServer from '@/blocks/heroCarousel/Server'
 import ImageBlockServer from '@/blocks/image/Server'
 import RichTextBlockServer from '@/blocks/richText/Server'
 import CardGridServer from '@/blocks/cardGrid/Server'
+import TwoColumnServer from '@/blocks/twoColumn/Server'
 import { Media, Page } from '@/payload-types'
 import React, { Fragment } from 'react'
 import { LexicalDocument } from '@/utils/serialize'
@@ -116,6 +117,53 @@ interface CardGridBlock {
   blockName?: string | null
 }
 
+// Add this interface with your other block interfaces
+interface TwoColumnBlock {
+  blockType: 'twoColumn'
+  layout: {
+    contentRatio?: '50-50' | '60-40' | '40-60' | '70-30' | '30-70'
+    verticalAlignment?: 'start' | 'center' | 'end'
+    spacing?: 'compact' | 'medium' | 'spacious'
+    reverseOnMobile?: boolean
+  }
+  leftColumn: {
+    contentType: 'text' | 'media'
+    text?: {
+      heading?: string | null
+      content?: LexicalDocument // Changed from any to LexicalDocument
+      button?: {
+        label?: string | null
+        link?: string | null
+        variant?: 'primary' | 'secondary'
+      } | null
+    } | null
+    media?: {
+      type?: 'image' | 'video'
+      image?: Media | null
+      video?: Media | null
+    } | null
+  }
+  rightColumn: {
+    contentType: 'text' | 'media'
+    text?: {
+      heading?: string | null
+      content?: LexicalDocument // Changed from any to LexicalDocument
+      button?: {
+        label?: string | null
+        link?: string | null
+        variant?: 'primary' | 'secondary'
+      } | null
+    } | null
+    media?: {
+      type?: 'image' | 'video'
+      image?: Media | null
+      video?: Media | null
+    } | null
+  }
+  id?: string | null
+  blockName?: string | null
+}
+
 type BlockType =
   | CoverBlock
   | ImageBlock
@@ -123,6 +171,7 @@ type BlockType =
   | HeroBlock
   | HeroCarouselBlock
   | CardGridBlock
+  | TwoColumnBlock
 
 // Type guards with specific types
 function isCoverBlock(block: BlockType): block is CoverBlock {
@@ -152,6 +201,11 @@ function isCardGridBlock(block: BlockType): block is CardGridBlock {
   return block.blockType === 'cardGrid'
 }
 
+// Add type guard for TwoColumnBlock
+function isTwoColumnBlock(block: BlockType): block is TwoColumnBlock {
+  return block.blockType === 'twoColumn'
+}
+
 // Helper function to get image object
 function getImageObject(image: unknown): { url: string; alt: string } {
   if (typeof image === 'object' && image !== null && 'url' in image) {
@@ -176,6 +230,19 @@ export const RenderBlocks: React.FC<{
       <Fragment>
         {blocks.map((block, index) => {
           const typedBlock = block as BlockType
+
+          // Add this case with the other block type checks
+          if (isTwoColumnBlock(typedBlock)) {
+            return (
+              <div key={index}>
+                <TwoColumnServer
+                  layout={typedBlock.layout}
+                  leftColumn={typedBlock.leftColumn}
+                  rightColumn={typedBlock.rightColumn}
+                />
+              </div>
+            )
+          }
 
           // Add this case with the other block type checks
           if (isHeroCarouselBlock(typedBlock)) {
