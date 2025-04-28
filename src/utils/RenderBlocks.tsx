@@ -5,6 +5,7 @@ import ImageBlockServer from '@/blocks/image/Server'
 import RichTextBlockServer from '@/blocks/richText/Server'
 import CardGridServer from '@/blocks/cardGrid/Server'
 import TwoColumnServer from '@/blocks/twoColumn/Server'
+import PricingTableServer from '@/blocks/pricingTable/Server' // Import the new server component
 import { Media, Page } from '@/payload-types'
 import React, { Fragment } from 'react'
 import { LexicalDocument } from '@/utils/serialize'
@@ -171,6 +172,39 @@ interface TwoColumnBlock {
   blockName?: string | null
 }
 
+// Add this interface with your other block interfaces
+interface PricingTableBlock {
+  blockType: 'pricingTable'
+  heading?: string
+  description?: string
+  layout: {
+    style: 'default' | 'compact' | 'featured'
+    columns: '2' | '3' | '4'
+    spacing: 'compact' | 'medium' | 'spacious'
+  }
+  plans: Array<{
+    name: string
+    featured: boolean
+    price: {
+      amount: number
+      currency: 'USD' | 'EUR' | 'GBP'
+      period: 'monthly' | 'yearly' | 'once'
+    }
+    description?: string
+    features: Array<{
+      text: string
+      included: boolean
+    }>
+    button: {
+      label: string
+      link: string
+      variant: 'primary' | 'secondary'
+    }
+  }>
+  id?: string | null
+  blockName?: string | null
+}
+
 type BlockType =
   | CoverBlock
   | ImageBlock
@@ -179,6 +213,7 @@ type BlockType =
   | HeroCarouselBlock
   | CardGridBlock
   | TwoColumnBlock
+  | PricingTableBlock // Add this line
 
 // Type guards with specific types
 function isCoverBlock(block: BlockType): block is CoverBlock {
@@ -211,6 +246,11 @@ function isCardGridBlock(block: BlockType): block is CardGridBlock {
 // Add type guard for TwoColumnBlock
 function isTwoColumnBlock(block: BlockType): block is TwoColumnBlock {
   return block.blockType === 'twoColumn'
+}
+
+// Add this type guard with your other type guards
+function isPricingTableBlock(block: BlockType): block is PricingTableBlock {
+  return block.blockType === 'pricingTable'
 }
 
 // Helper function to get image object
@@ -316,6 +356,20 @@ export const RenderBlocks: React.FC<{
                   description={typedBlock.description}
                   layout={typedBlock.layout}
                   cards={processedCards}
+                />
+              </div>
+            )
+          }
+
+          // Add this case in the blocks.map function:
+          if (isPricingTableBlock(typedBlock)) {
+            return (
+              <div key={index}>
+                <PricingTableServer
+                  heading={typedBlock.heading}
+                  description={typedBlock.description}
+                  layout={typedBlock.layout}
+                  plans={typedBlock.plans}
                 />
               </div>
             )

@@ -369,6 +369,43 @@ export interface Page {
             blockName?: string | null;
             blockType: 'twoColumn';
           }
+        | {
+            heading?: string | null;
+            description?: string | null;
+            layout?: {
+              style?: ('default' | 'compact' | 'featured') | null;
+              columns?: ('2' | '3' | '4') | null;
+              spacing?: ('compact' | 'medium' | 'spacious') | null;
+            };
+            plans?:
+              | {
+                  name: string;
+                  featured?: boolean | null;
+                  price: {
+                    amount: number;
+                    currency?: ('USD' | 'EUR' | 'GBP') | null;
+                    period?: ('monthly' | 'yearly' | 'once') | null;
+                  };
+                  description?: string | null;
+                  features?:
+                    | {
+                        text: string;
+                        included?: boolean | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  button?: {
+                    label?: string | null;
+                    link?: string | null;
+                    variant?: ('primary' | 'secondary') | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'pricingTable';
+          }
       )[]
     | null;
   /**
@@ -693,6 +730,50 @@ export interface PagesSelect<T extends boolean = true> {
                           image?: T;
                           video?: T;
                         };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        pricingTable?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              layout?:
+                | T
+                | {
+                    style?: T;
+                    columns?: T;
+                    spacing?: T;
+                  };
+              plans?:
+                | T
+                | {
+                    name?: T;
+                    featured?: T;
+                    price?:
+                      | T
+                      | {
+                          amount?: T;
+                          currency?: T;
+                          period?: T;
+                        };
+                    description?: T;
+                    features?:
+                      | T
+                      | {
+                          text?: T;
+                          included?: T;
+                          id?: T;
+                        };
+                    button?:
+                      | T
+                      | {
+                          label?: T;
+                          link?: T;
+                          variant?: T;
+                        };
+                    id?: T;
                   };
               id?: T;
               blockName?: T;

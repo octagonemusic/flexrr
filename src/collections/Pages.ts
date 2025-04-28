@@ -6,6 +6,7 @@ import { Hero } from '@/blocks/hero/schema'
 import { HeroCarousel } from '@/blocks/heroCarousel/schema'
 import { CardGrid } from '@/blocks/cardGrid/schema'
 import { TwoColumn } from '@/blocks/twoColumn/schema'
+import { PricingTable } from '@/blocks/pricingTable/schema'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -29,7 +30,7 @@ export const Pages: CollectionConfig = {
       name: 'layout',
       label: 'Layout',
       type: 'blocks',
-      blocks: [Cover, RichText, Image, Hero, HeroCarousel, CardGrid, TwoColumn],
+      blocks: [Cover, RichText, Image, Hero, HeroCarousel, CardGrid, TwoColumn, PricingTable],
     },
     {
       name: 'seo',
