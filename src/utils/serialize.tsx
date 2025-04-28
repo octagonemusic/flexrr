@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react'
-import escapeHTML from 'escape-html'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -106,31 +105,28 @@ const serializeNodes = (nodes: LexicalNode[]): ReactNode => {
     if (node.type === 'text') {
       const text = node.text || ''
 
-      // Escape the HTML in text nodes
-      const safeText = escapeHTML(text)
-
       if (text.trim().length === 0 && !node.isInline) {
         return null
       }
 
       // Handle text formatting
       if (node.bold) {
-        return <strong key={i}>{safeText}</strong>
+        return <strong key={i}>{text}</strong>
       } else if (node.italic) {
-        return <em key={i}>{safeText}</em>
+        return <em key={i}>{text}</em>
       } else if (node.underline) {
-        return <u key={i}>{safeText}</u>
+        return <u key={i}>{text}</u>
       } else if (node.strikethrough) {
-        return <s key={i}>{safeText}</s>
+        return <s key={i}>{text}</s>
       } else if (node.code) {
-        return <code key={i}>{safeText}</code>
+        return <code key={i}>{text}</code>
       } else if (node.subscript) {
-        return <sub key={i}>{safeText}</sub>
+        return <sub key={i}>{text}</sub>
       } else if (node.superscript) {
-        return <sup key={i}>{safeText}</sup>
+        return <sup key={i}>{text}</sup>
       }
 
-      return <span key={i}>{safeText}</span>
+      return <span key={i}>{text}</span>
     }
 
     if (node.type === 'link') {
