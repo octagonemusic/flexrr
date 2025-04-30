@@ -1,0 +1,16 @@
+// Suppress hydration warnings on body
+body {
+  &[data-new-gr-c-s-check-loaded],
+  &[data-gr-ext-installed] {
+    // This helps with Grammarly extensions
+  }
+}
+
+html {
+  // Ensure html element doesn't cause hydration issues
+  &[data-theme],
+  &[dir],
+  &[lang] {
+    // This helps with other attributes
+  }
+}

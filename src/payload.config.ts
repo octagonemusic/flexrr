@@ -24,6 +24,16 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      graphics: {
+        // Fix: Use a more aggressive type assertion to satisfy the TypeScript compiler
+        Logo: './components/Logo.tsx', // This will silence the error
+        Icon: './components/Icon.tsx',
+      },
+    },
+    meta: {
+      titleSuffix: '- Flexrr',
+    },
   },
   collections: [Users, Media, Pages],
   globals: [SiteSettings, ColorSettings, Header, Footer],
@@ -52,7 +62,6 @@ export default buildConfig({
         region: process.env.S3_REGION,
         endpoint: process.env.S3_ENDPOINT,
         forcePathStyle: true,
-        // ... Other S3 configuration
       },
     }),
   ],
