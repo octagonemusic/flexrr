@@ -104,24 +104,6 @@ For deployment, we recommend Vercel:
 - Configure the environment variables from your `.env.local`
 - Deploy your project
 
-## 📁 Project Structure
-
-```
-flexrr/
-├── app/              # Next.js App Router
-│   ├── api/          # API routes
-│   ├── admin/        # Admin panel redirects
-│   └── ...           # Front-end routes
-├── components/       # React components
-├── payload/          # Payload CMS configuration
-│   ├── collections/  # Content models
-│   ├── blocks/       # Content blocks
-│   └── fields/       # Custom fields
-├── lib/              # Utility functions
-├── public/           # Static assets
-└── styles/           # Global styles
-```
-
 ## 🖥️ Payload CMS
 
 Flexrr leverages Payload CMS to provide a powerful content management experience:
