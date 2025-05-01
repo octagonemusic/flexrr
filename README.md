@@ -1,21 +1,41 @@
-# Flexrr - A Next.js Framework with Payload CMS
+# Flexrr – A flexible website builder built with Next.js and Payload
 
 ![Flexrr Logo](https://github.com/octagonemusic/flexrr/raw/main/public/logo-flexrr.png)
 
-## 📚 Overview
+## 📚 What is Flexrr?
 
-Flexrr is a modern web development framework that combines the power of Next.js with Payload CMS, offering a complete solution for building high-performance, SEO-optimized websites. Designed for developers who prioritize both speed and flexibility, Flexrr streamlines the process of creating content-rich websites without sacrificing developer experience.
+**For non-technical users:**  
+A modern, easy-to-manage flexible website builder with a visual content editor (via Payload CMS).
 
-**Key Features:**
-- 🚀 Built on Next.js 14 with App Router for optimal performance
-- 📊 Integrated with Payload CMS for a powerful, customizable admin experience
-- 🎨 Fully customizable content model with rich editing capabilities
-- 🖼️ Seamless media management via Supabase Storage
-- 📱 Responsive design with TailwindCSS
-- 🌙 Dark mode support out of the box
-- 🧩 Component-based architecture for maximum reusability
-- 📈 Built-in SEO optimization tools
-- 🔍 Content previews and draft management
+**For technical users:**  
+A fully extensible platform with a component-based frontend (Next.js) and a headless CMS backend (Payload) that's easy to customize.
+
+### Perfect For:
+- 🏪 Small business websites
+- 🎯 Professional landing pages
+- 📱 Personal portfolios
+- 📰 Content-rich websites
+- 🍽️ Restaurant sites
+- 📅 Event pages
+
+### Why Choose Flexrr?
+
+**For Business Owners:**
+- 🎨 No coding required
+- 📝 Easy visual content editing
+- 📱 Mobile-friendly by default
+- 🔍 Built-in SEO tools
+- 🚀 Fast-loading pages
+- 💼 Professional looking out of the box
+
+**For Developers:**
+- ⚡ Next.js 14 with App Router
+- 🔧 Fully customizable components with Payload CMS
+- 🎮 Strong TypeScript support
+- 📦 Modern development setup
+- 🔌 Easy API integration
+- 🛠️ Extensible architecture
+
 
 ## 🚀 Getting Started
 
@@ -31,7 +51,7 @@ Flexrr Studio streamlines the setup process by automating repository creation an
 4. Configure your project settings (you'll need to set up your own MongoDB and Supabase accounts)
 5. Flexrr Studio will clone the template, set up the repository, and provide you with environment variables ready to use for deployment
 
-*Note: Flexrr Studio simplifies the initial setup process, but you'll still need to create and configure your own MongoDB Atlas database and Supabase project.*
+*Note: Flexrr Studio simplifies the initial setup process and subsequent updates, but you'll still need to create and configure your own MongoDB Atlas database and Supabase project.*
 
 ### Option 2: Manual Setup
 
