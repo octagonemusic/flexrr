@@ -9,7 +9,8 @@ interface DropdownItem {
   link?: string | null
   icon?: string | null
   description?: string | null
-  highlight?: boolean
+  highlight?: boolean | null
+  id?: string | null
 }
 
 interface HeaderDropdownProps {

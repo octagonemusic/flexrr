@@ -7,7 +7,7 @@ import { Media } from '@/payload-types'
 export const revalidate = 60
 
 // Social media icons
-const SocialIcon = ({ platform, color }: { platform: string; color?: string }) => {
+const SocialIcon = ({ platform, color }: { platform: string; color?: string | null }) => {
   const iconColor = color || 'currentColor'
   
   const getIcon = (platform: string) => {
@@ -205,7 +205,7 @@ export default async function FooterServer() {
                       aria-label={`Follow us on ${social.platform}`}
                       className="hover:scale-110 transition-transform"
                     >
-                      <SocialIcon platform={social.platform} color={social.color} />
+                      <SocialIcon platform={social.platform} color={social.color || undefined} />
                     </a>
                   ))}
                 </div>
@@ -239,7 +239,7 @@ export default async function FooterServer() {
                         aria-label={`Follow us on ${social.platform}`}
                         className="hover:scale-110 transition-transform"
                       >
-                        <SocialIcon platform={social.platform} color={social.color} />
+                        <SocialIcon platform={social.platform} color={social.color || undefined} />
                       </a>
                     ))}
                   </div>

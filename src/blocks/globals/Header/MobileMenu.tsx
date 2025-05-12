@@ -13,7 +13,8 @@ interface NavItem {
     link?: string | null
     description?: string | null
     icon?: string | null
-    highlight?: boolean
+    highlight?: boolean | null
+    id?: string | null
   }> | null
   badge?: string | null
   badgeColor?: string | null
@@ -24,7 +25,7 @@ interface ActionButton {
   link?: string | null
   variant?: string | null
   icon?: string | null
-  newTab?: boolean
+  newTab?: boolean | null
 }
 
 interface MobileMenuProps {

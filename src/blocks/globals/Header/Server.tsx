@@ -10,11 +10,11 @@ export const revalidate = 60
 
 // Helper component for the Top Announcement Bar
 const TopBar = ({ topBar }: { topBar: { 
-  enabled?: boolean;
-  text?: string;
-  ctaText?: string;
-  ctaLink?: string;
-  backgroundColor?: string;
+  enabled?: boolean | null;
+  text?: string | null;
+  ctaText?: string | null;
+  ctaLink?: string | null;
+  backgroundColor?: string | null;
 } }) => {
   if (!topBar?.enabled) return null
 
@@ -130,7 +130,13 @@ export default async function HeaderServer() {
   return (
     <>
       {/* Top Announcement Bar - if enabled */}
-      {header?.topBar?.enabled && <TopBar topBar={header.topBar} />}
+      {header?.topBar?.enabled && <TopBar topBar={{
+        enabled: header.topBar.enabled || undefined,
+        text: header.topBar.text || undefined,
+        ctaText: header.topBar.ctaText || undefined,
+        ctaLink: header.topBar.ctaLink || undefined,
+        backgroundColor: header.topBar.backgroundColor || undefined
+      }} />}
 
       {/* Main Header */}
       <header
@@ -160,7 +166,14 @@ export default async function HeaderServer() {
               <nav className={`${mobileHideClass} items-center pb-2`}>
                 {navItems.map((item, index) =>
                   item.hasDropdown ? (
-                    <HeaderDropdown key={index} label={item.label || ''} items={item.submenu || []} />
+                    <HeaderDropdown 
+                      key={index} 
+                      label={item.label || ''} 
+                      items={(item.submenu || []).map(submenuItem => ({
+                        ...submenuItem,
+                        highlight: submenuItem.highlight || undefined
+                      }))} 
+                    />
                   ) : (
                     <Link
                       key={index}
@@ -200,7 +213,19 @@ export default async function HeaderServer() {
 
               {/* Mobile Menu Toggle (Centered version) */}
               <div className={`${desktopHideClass} absolute right-4 top-4`}>
-                <MobileMenu items={navItems} actionButton={header?.buttons?.[0]} />
+                <MobileMenu 
+                  items={navItems.map(item => ({
+                    ...item,
+                    submenu: item.submenu?.map(submenuItem => ({
+                      ...submenuItem,
+                      highlight: submenuItem.highlight || undefined
+                    }))
+                  }))} 
+                  actionButton={header?.buttons?.[0] ? {
+                    ...header.buttons[0],
+                    newTab: header.buttons[0].newTab || undefined
+                  } : undefined} 
+                />
               </div>
             </div>
           ) : (
@@ -225,7 +250,14 @@ export default async function HeaderServer() {
               <nav className={`${mobileHideClass} items-center space-x-1`}>
                 {navItems.map((item, index) =>
                   item.hasDropdown ? (
-                    <HeaderDropdown key={index} label={item.label || ''} items={item.submenu || []} />
+                    <HeaderDropdown 
+                      key={index} 
+                      label={item.label || ''} 
+                      items={(item.submenu || []).map(submenuItem => ({
+                        ...submenuItem,
+                        highlight: submenuItem.highlight || undefined
+                      }))} 
+                    />
                   ) : (
                     <Link
                       key={index}
@@ -313,10 +345,19 @@ export default async function HeaderServer() {
               {/* Mobile Navigation Toggle */}
               <div className={desktopHideClass}>
                 <MobileMenu 
-                  items={navItems} 
+                  items={navItems.map(item => ({
+                    ...item,
+                    submenu: item.submenu?.map(submenuItem => ({
+                      ...submenuItem,
+                      highlight: submenuItem.highlight || undefined
+                    }))
+                  }))}
                   actionButton={
                     header?.buttons && header.buttons.length > 0 
-                      ? header.buttons[0] 
+                      ? {
+                          ...header.buttons[0],
+                          newTab: header.buttons[0].newTab || undefined
+                        }
                       : undefined
                   } 
                 />
