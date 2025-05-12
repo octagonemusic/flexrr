@@ -925,32 +925,76 @@ export interface ColorSetting {
  */
 export interface Header {
   id: string;
+  /**
+   * Logo displayed in the header (recommended dimensions: 160x64px)
+   */
   logo: string | Media;
   nav: {
-    label?: string | null;
+    label: string;
     link?: string | null;
     /**
      * Optional badge (e.g. "New", "Hot")
      */
     badge?: string | null;
     /**
+     * Color theme for the badge
+     */
+    badgeColor?: ('primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info') | null;
+    /**
      * Add dropdown items (if any)
      */
     submenu?:
       | {
-          label?: string | null;
-          link?: string | null;
+          label: string;
+          link: string;
+          /**
+           * Optional short description under the label
+           */
+          description?: string | null;
+          /**
+           * Optional icon name (e.g., "home", "settings")
+           */
+          icon?: string | null;
+          highlight?: boolean | null;
           id?: string | null;
         }[]
       | null;
     id?: string | null;
   }[];
   /**
-   * Optional call-to-action button
+   * Add up to 2 call-to-action buttons
    */
-  actionButton?: {
-    label?: string | null;
-    link?: string | null;
+  buttons?:
+    | {
+        label: string;
+        link: string;
+        variant?: ('primary' | 'secondary' | 'text' | 'outline') | null;
+        /**
+         * Optional icon name to show before text (e.g., "arrow-right")
+         */
+        icon?: string | null;
+        newTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  layout?: {
+    variant?: ('standard' | 'transparent' | 'centered' | 'minimal') | null;
+    sticky?: boolean | null;
+    containerWidth?: ('standard' | 'wide' | 'narrow' | 'full') | null;
+    mobileBreakpoint?: ('sm' | 'md' | 'lg') | null;
+  };
+  /**
+   * Optional bar above the main header for announcements or contact info
+   */
+  topBar?: {
+    enabled?: boolean | null;
+    text?: string | null;
+    ctaText?: string | null;
+    ctaLink?: string | null;
+    /**
+     * Hex color code (e.g., #FF5500) or use "primary", "secondary"
+     */
+    backgroundColor?: string | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -961,15 +1005,63 @@ export interface Header {
  */
 export interface Footer {
   id: string;
+  /**
+   * Logo displayed in the footer (recommended dimensions: 160x64px)
+   */
   logo: string | Media;
-  nav?:
+  /**
+   * Configure up to 3 columns of navigation links
+   */
+  columns?:
     | {
-        label?: string | null;
-        link?: string | null;
+        title: string;
+        links?:
+          | {
+              label: string;
+              link: string;
+              newTab?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
-  copyrightNotice?: string | null;
+  contactInfo?: {
+    title?: string | null;
+    /**
+     * Primary contact email
+     */
+    email?: string | null;
+    phone?: string | null;
+    address?: string | null;
+  };
+  /**
+   * Add social media links to the footer
+   */
+  socialMedia?:
+    | {
+        platform: 'facebook' | 'twitter' | 'instagram' | 'linkedin' | 'youtube' | 'github' | 'discord' | 'tiktok';
+        url: string;
+        /**
+         * Hex color code for the icon (e.g. #1DA1F2 for Twitter blue)
+         */
+        color?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  copyrightSettings?: {
+    /**
+     * Use {year} to insert the current year
+     */
+    copyrightText?: string | null;
+    companyName?: string | null;
+    showCurrentYear?: boolean | null;
+  };
+  layout?: {
+    style?: ('standard' | 'minimal' | 'expanded') | null;
+    columnsOnMobile?: ('stack' | '2-cols') | null;
+    width?: ('standard' | 'wide' | 'narrow') | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1059,20 +1151,45 @@ export interface HeaderSelect<T extends boolean = true> {
         label?: T;
         link?: T;
         badge?: T;
+        badgeColor?: T;
         submenu?:
           | T
           | {
               label?: T;
               link?: T;
+              description?: T;
+              icon?: T;
+              highlight?: T;
               id?: T;
             };
         id?: T;
       };
-  actionButton?:
+  buttons?:
     | T
     | {
         label?: T;
         link?: T;
+        variant?: T;
+        icon?: T;
+        newTab?: T;
+        id?: T;
+      };
+  layout?:
+    | T
+    | {
+        variant?: T;
+        sticky?: T;
+        containerWidth?: T;
+        mobileBreakpoint?: T;
+      };
+  topBar?:
+    | T
+    | {
+        enabled?: T;
+        text?: T;
+        ctaText?: T;
+        ctaLink?: T;
+        backgroundColor?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1084,14 +1201,50 @@ export interface HeaderSelect<T extends boolean = true> {
  */
 export interface FooterSelect<T extends boolean = true> {
   logo?: T;
-  nav?:
+  columns?:
     | T
     | {
-        label?: T;
-        link?: T;
+        title?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              newTab?: T;
+              id?: T;
+            };
         id?: T;
       };
-  copyrightNotice?: T;
+  contactInfo?:
+    | T
+    | {
+        title?: T;
+        email?: T;
+        phone?: T;
+        address?: T;
+      };
+  socialMedia?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        color?: T;
+        id?: T;
+      };
+  copyrightSettings?:
+    | T
+    | {
+        copyrightText?: T;
+        companyName?: T;
+        showCurrentYear?: T;
+      };
+  layout?:
+    | T
+    | {
+        style?: T;
+        columnsOnMobile?: T;
+        width?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
