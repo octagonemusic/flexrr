@@ -14,11 +14,20 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com'
 
   return {
-    rules: {
-      userAgent: '*',
-      allow: indexingEnabled ? '/' : '',
-      disallow: indexingEnabled ? '' : '/',
-    },
+    rules: [
+      {
+        userAgent: '*',
+        allow: indexingEnabled ? '/' : '',
+        disallow: indexingEnabled ? ['/admin/', '/api/'] : ['/', '/admin/', '/api/'],
+        crawlDelay: 2,
+      },
+      {
+        userAgent: 'AdsBot-Google',
+        allow: indexingEnabled ? '/' : '',
+        disallow: indexingEnabled ? ['/admin/', '/api/'] : ['/', '/admin/', '/api/'],
+      },
+    ],
     sitemap: `${baseUrl}/sitemap.xml`,
+    host: baseUrl,
   }
 }

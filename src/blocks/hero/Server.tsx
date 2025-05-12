@@ -79,7 +79,9 @@ export default function HeroBlockServer({ background, layout, content }: HeroPro
                 className={`object-cover ${styles.zoomEffect}`}
                 priority
                 sizes="100vw"
-                quality={80}
+                quality={85}
+                fetchPriority="high"
+                loading="eager"
               />
             </div>
           ) : null

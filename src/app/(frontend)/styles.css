@@ -13,7 +13,7 @@
   --color-footer-bg: #1f2937;
   --color-footer-text: #ffffff;
   --color-footer-text-secondary: #9ca3af;
-  --font-mono: 'Roboto Mono', monospace;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 /* Base styles */

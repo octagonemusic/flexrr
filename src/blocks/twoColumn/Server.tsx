@@ -110,7 +110,10 @@ export default function TwoColumnServer({ layout, leftColumn, rightColumn }: Two
                 src={column.media.image.url}
                 alt={column.media.image.alt || ''}
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover"
+                quality={85}
+                loading="eager"
               />
             </div>
           )}

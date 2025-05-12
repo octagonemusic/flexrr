@@ -4,6 +4,7 @@ import { generateMetadata as generatePageMetadata } from '@/utils/generateMetada
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { cache } from 'react'
+import { getSiteSettings } from '@/utils/getSiteSettings'
 
 // Set revalidation time for ISR on the homepage
 export const revalidate = 60
@@ -27,19 +28,35 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
 // Generate metadata for the homepage
 export async function generateMetadata(): Promise<Metadata> {
   const page = await queryPageBySlug({ slug: 'index' })
+  const siteSettings = await getSiteSettings()
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com'
 
   if (!page) return {}
+
+  // Get default site OG image if page doesn't have one
+  let ogImage = page.seo?.image
+  if (!ogImage && siteSettings?.generalSettings?.ogImage) {
+    ogImage = siteSettings.generalSettings.ogImage
+  }
 
   return generatePageMetadata({
     title: page.seo?.title || page.name || undefined,
     description: page.seo?.description || undefined,
-    image: page.seo?.image || undefined,
+    image: ogImage || undefined,
     noIndex: page.seo?.noIndex || false,
+    alternates: {
+      canonical: baseUrl,
+    },
   })
 }
 
 // Create a wrapper component that passes the correct props
 export default function HomePage() {
   // For the homepage, use 'index' as the slug
-  return <SlugPage params={{ slug: 'index' }} />
+  return (
+    <>
+      <h1 className="sr-only">Home</h1>
+      <SlugPage params={{ slug: 'index' }} />
+    </>
+  )
 }

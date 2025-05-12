@@ -7,6 +7,11 @@ interface PageSEO {
   description?: string
   image?: string | Media
   noIndex?: boolean
+  alternates?: {
+    canonical?: string
+    languages?: Record<string, string>
+  }
+  keywords?: string[]
 }
 
 export async function generateMetadata(pageSEO?: PageSEO): Promise<Metadata> {
@@ -20,17 +25,29 @@ export async function generateMetadata(pageSEO?: PageSEO): Promise<Metadata> {
 
   // Default OG image
   let ogImageUrl = ''
+  let ogImageWidth: number | undefined
+  let ogImageHeight: number | undefined
+  let ogImageAlt = siteName
+  
   if (
     siteSettings?.generalSettings?.ogImage &&
     typeof siteSettings.generalSettings.ogImage === 'object'
   ) {
-    ogImageUrl = (siteSettings.generalSettings.ogImage as Media).url || ''
+    const ogImage = siteSettings.generalSettings.ogImage as Media
+    ogImageUrl = ogImage.url || ''
+    ogImageWidth = ogImage.width || 1200
+    ogImageHeight = ogImage.height || 630
+    ogImageAlt = ogImage.alt || siteName
   }
 
   // Page-specific OG image if available
   if (pageSEO?.image) {
     if (typeof pageSEO.image === 'object' && 'url' in pageSEO.image) {
-      ogImageUrl = (pageSEO.image as Media).url || ogImageUrl
+      const pageImage = pageSEO.image as Media
+      ogImageUrl = pageImage.url || ogImageUrl
+      ogImageWidth = pageImage.width || ogImageWidth
+      ogImageHeight = pageImage.height || ogImageHeight
+      ogImageAlt = pageImage.alt || pageSEO.title || ogImageAlt
     }
   }
 
@@ -40,18 +57,32 @@ export async function generateMetadata(pageSEO?: PageSEO): Promise<Metadata> {
   return {
     title: pageSEO?.title ? `${pageSEO.title}${suffix}` : siteName,
     description: pageSEO?.description || siteDescription,
+    keywords: pageSEO?.keywords,
+    alternates: pageSEO?.alternates,
     openGraph: ogImageUrl
       ? {
+          title: pageSEO?.title || siteName,
+          description: pageSEO?.description || siteDescription,
+          url: pageSEO?.alternates?.canonical,
+          siteName,
+          locale: 'en_US',
+          type: 'website',
           images: [
             {
               url: ogImageUrl,
-              width: 1200,
-              height: 630,
-              alt: pageSEO?.title || siteName,
+              width: ogImageWidth,
+              height: ogImageHeight,
+              alt: ogImageAlt,
             },
           ],
         }
       : undefined,
+    twitter: {
+      card: 'summary_large_image',
+      title: pageSEO?.title || siteName,
+      description: pageSEO?.description || siteDescription,
+      images: ogImageUrl ? [ogImageUrl] : undefined,
+    },
     robots: {
       index: robotsIndex === 'index',
       follow: true,
@@ -59,6 +90,9 @@ export async function generateMetadata(pageSEO?: PageSEO): Promise<Metadata> {
         index: robotsIndex === 'index',
         follow: true,
       },
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
     },
   }
 }
